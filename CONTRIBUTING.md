@@ -50,7 +50,7 @@ If the file is fine, you will see this section in your Pull Request details:
 If there has been a validation error, this will be the section instead:
 ![Pull Request creation](./img/validation-error.png)
 
-Click on details and then on Validate file to expand the error details:
+Click on "details" and then on "Validate file" to expand the error details:
 ![Pull Request creation](./img/validation-error-details.png)
 
 ## Git Commit Messages
