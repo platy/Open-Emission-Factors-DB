@@ -92,7 +92,7 @@ This category is for estimating the CO2 equivalent emissions of shipping goods b
 
 This category is for estimating the CO2 equivalent emissions produced by the disposal of waste.
 
-`waste_type[e.g."aggregates"]-disposal_method_[e.g."open-loop"]`
+`waste_type_[e.g."aggregates"]-disposal_method_[e.g."open-loop"]`
 
 
 ## Glossary of terms, initialisms, and acronyms used in the OEFDB ID field
