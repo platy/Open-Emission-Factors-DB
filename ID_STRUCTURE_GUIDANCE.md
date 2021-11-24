@@ -88,11 +88,11 @@ This category is for estimating the CO2 equivalent emissions of shipping goods b
 
 `sea_transport-vessel_type [e.g. "bulk_carrier"]- route_type_[e.g. "intra_mediterranean"]-vessel_length_[e.g. "gt-8000-teu"]-tonnage_[e.g. "gt_200000dwt"]-fuel_source_[e.g. "na" or "diesel"]`
 
-**Waste Transport**
+**Waste Disposal**
 
-This category is for estimating the CO2 equivalent emissions for generated waste. 
+This category is for estimating the CO2 equivalent emissions produced by the disposal of waste.
 
-`waste_type [e.g. "aggregates"]- disposal_method_[e.g."open-loop"]`
+`waste_type[e.g."aggregates"]-disposal_method_[e.g."open-loop"]`
 
 
 ## Glossary of terms, initialisms, and acronyms used in the OEFDB ID field
