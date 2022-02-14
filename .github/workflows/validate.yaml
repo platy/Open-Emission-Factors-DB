@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  validate-2:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
