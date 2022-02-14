@@ -16,14 +16,12 @@ jobs:
         with:
           python-version: '3' # Version range or exact version of a Python version to use, using SemVer's version range syntax
 
-      - name: Get pip cache dir
+      - name: Get pip cache directory
         id: pip-cache
         run: |
           echo "::set-output name=dir::$(pip cache dir)"
           
-      - run: echo ${{ steps.pip-cache.outputs.dir }}
-
-      - name: pip cache
+      - name: Cache pip dependencies
         uses: actions/cache@v2
         with:
           path: ${{ steps.pip-cache.outputs.dir }}
@@ -31,11 +29,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-1
 
-      - run: python3 -m pip install --extra-index-url https://test.pypi.org/simple/ oefdb-test
+      - name: Install OEFDB python SDK
+        run: python3 -m pip install --extra-index-url https://test.pypi.org/simple/ oefdb-test
 
-
-
-
-
-
-#      - run: oefdb_validate -i OpenEmissionFactorsDB.csv
+      - name: Validate database
+        run: oefdb_validate -i OpenEmissionFactorsDB.csv
