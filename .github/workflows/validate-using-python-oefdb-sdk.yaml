@@ -46,6 +46,10 @@ jobs:
         run: poetry install --no-dev
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         working-directory: python-oefdb-sdk
-      - name: Validate file
+      - name: Validate OEFDB
         run: poetry run oefdb_validate -i ../OpenEmissionFactorsDB.csv
+        working-directory: python-oefdb-sdk
+      - name: Validate OEFDB schema
+        if: always()
+        run: poetry run oefdb_validate_schema -i ../OpenEmissionFactorsDB.csv -s ../metadata/schema.toml
         working-directory: python-oefdb-sdk
