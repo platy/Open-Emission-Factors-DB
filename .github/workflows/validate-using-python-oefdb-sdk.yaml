@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
       - name: Set up Python ${{ matrix.python }}
         uses: actions/setup-python@v2
         with:
@@ -62,7 +64,7 @@ jobs:
           # the entire CI run if an error occurs
           poetry run oefdb_validate_schema -i ../OpenEmissionFactorsDB.csv -s ../metadata/schema.toml --fix 2>&1 | tee test.log
           result_code=${PIPESTATUS[0]}
-          
+
           # There is a limit to how much input we can pass into the comment action
           # So if we have too much output here we need to truncate it
           if [[ $(wc -l < test.log) -ge 100 ]]
@@ -74,7 +76,7 @@ jobs:
           else
               RESULT=$(cat test.log)
           fi
-          
+
           # Github deals terribly with multiline strings.
           # So we have to replace them with escape chars here and then Github will automatically unescape
           # Otherwise we can only capture the first line of our string
@@ -82,14 +84,39 @@ jobs:
           RESULT="${RESULT//'%'/'%25'}"
           RESULT="${RESULT//$'\n'/'%0A'}"
           RESULT="${RESULT//$'\r'/'%0D'}"
-          
+
           # Assign the modified result so it is accessible later
           echo "::set-output name=cli_output::$RESULT"
           # And then exit with the original exit code of the command
           exit $result_code
 
-        # If autofix has changed some files, we commit them here
-        # Note that this does not trigger an extra CI run. See https://github.com/stefanzweifel/git-auto-commit-action#commits-made-by-this-action-do-not-trigger-new-workflow-runs
+      - name: Format OEFDB
+        id: formatting
+        working-directory: python-oefdb-sdk
+        run: |
+          # See https://stackoverflow.com/a/66713349/8007580 for this solution that allows us to capture output while still failing
+          # the entire CI run if an error occurs
+          poetry run oefdb_format -i ../OpenEmissionFactorsDB.csv 2>&1 | tee test.log
+          result_code=${PIPESTATUS[0]}
+
+          RESULT=$(cat test.log)
+
+          # Github deals terribly with multiline strings.
+          # So we have to replace them with escape chars here and then Github will automatically unescape
+          # Otherwise we can only capture the first line of our string
+          # see https://github.community/t/set-output-truncates-multiline-strings/16852/4
+          RESULT="${RESULT//'%'/'%25'}"
+          RESULT="${RESULT//$'\n'/'%0A'}"
+          RESULT="${RESULT//$'\r'/'%0D'}"
+
+          # Assign the modified result so it is accessible later
+          echo "::set-output name=formatting_output::$RESULT"
+          # And then exit with the original exit code of the command
+          exit $result_code
+
+          # If autofix has changed some files, we commit them here
+          # Note that this does not trigger an extra CI run. See https://github.com/stefanzweifel/git-auto-commit-action#commits-made-by-this-action-do-not-trigger-new-workflow-runs
+
       - name: Commits and pushes changed files
         if: always() # Previous step will fail if it still cannot validate after fixes - in that case we still want to commit the fixes
         id: auto-commit-action
@@ -107,5 +134,5 @@ jobs:
                   issue_number: context.issue.number,
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  body: `# Automatic fix applied \n The OEFDB validator has encountered something it could fix automatically. \n It has automatically changed some lines and pushed a new commit to your branch. \n\n  Please inspect the output below, and run `git pull` to update your local branch if you want to keep working. \n \`\`\`\n ${{ steps.schema_validation.outputs.cli_output }} \n\`\`\``
+                  body: `# Automatic fix applied \n The OEFDB validator has encountered something it could fix automatically. \n It has automatically changed some lines and pushed a new commit to your branch. \n\n  Please inspect the output below, and run \`git pull\` to update your local branch if you want to keep working. You might need to go to the "actions" tab to see detailed output. \n ## Schema validation \n \`\`\`\n ${{ steps.schema_validation.outputs.cli_output }} \n\`\`\` \n ## Formatting \n \`\`\`\n ${{ steps.formatting.outputs.formatting_output }} \n\`\`\``
                 });
