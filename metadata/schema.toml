@@ -314,7 +314,8 @@ allowed_values = [
     "UBA",
     "STC-Nestra B.V.",
     "GEMIS",
-    "GLEC"
+    "GLEC",
+    "EEA"
 ]
 
 [[columns]]
