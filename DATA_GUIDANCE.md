@@ -30,7 +30,7 @@ Emission factor category. Aligned with `sector`, but more specific to the activi
 - Sub IDs are defined per category - see the full list of these in the [ID structure guidance document.](/ID_STRUCTURE_GUIDANCE.md)
 - See a list of glossary terms and abbreviations used in the OEFDB ID field at the foot of the [ID structure guidance document.](/ID_STRUCTURE_GUIDANCE.md)
 
-**Important:** The uniqueness of an emission factor is defined by `activity_id`, `source`, `year_valid`, `region` and l`ca_activity`. No more than one emission factor should be defined with the same values for all five fields. This is what defines an emission factor as a unique entity and allows the system to understand the differences and blanks in the data. 
+**Important:** The uniqueness of an emission factor is defined by `activity_id`, `source`, `year_valid`, `region` and `lca_activity`. No more than one emission factor should be defined with the same values for all five fields. This is what defines an emission factor as a unique entity and allows the system to understand the differences and blanks in the data. 
 
 When designing an ID, the important question is: do you think another emission factor from the same `source`, `region` and `year`, could hold **different methodologies/particularities** for the same activity? If the answer is yes, it needs to be in the `activity_id` or `lca_activity` fields.
 
