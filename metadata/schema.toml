@@ -348,6 +348,7 @@ allowed_values = [
     "o|h",
     "m",
     "e",
+    "p"
 ]
 
 [[columns]]
