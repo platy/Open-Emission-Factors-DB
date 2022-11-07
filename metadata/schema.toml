@@ -324,7 +324,7 @@ validators = ["is_year"]
 allow_empty = false
 
 [[columns]]
-name = "years_valid"
+name = "years_valid_from"
 validators = ["has_no_commas", "is_ascii"]
 allow_empty = true
 
