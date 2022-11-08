@@ -325,13 +325,29 @@ allow_empty = false
 
 [[columns]]
 name = "years_valid_from"
-validators = ["has_no_commas", "is_ascii"]
+validators = [ "is_year"]
 allow_empty = true
 
 [[columns]]
 name = "years_calculated_from"
-validators = ["is_year"]
+validators = ["has_no_commas", "is_ascii"]
 allow_empty = true
+allowed_values = [
+    "2007",
+    "2007|2013",
+    "2010",
+    "2011",
+    "2012",
+    "2013",
+    "2014",
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022"]
 
 [[columns]]
 name = "region"
